@@ -1,0 +1,6 @@
+@MFC.WEB_HostAddress = http://localhost:5280
+
+GET {{MFC.WEB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

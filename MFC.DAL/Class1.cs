@@ -1,4 +1,4 @@
-﻿namespace MFC.CORE
+﻿namespace MFC.DAL
 {
     public class Class1
     {
