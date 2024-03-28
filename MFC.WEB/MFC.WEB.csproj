@@ -13,4 +13,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MFC.CORE\MFC.CORE.csproj" />
+    <ProjectReference Include="..\MFC.DAL\MFC.DAL.csproj" />
+  </ItemGroup>
+
 </Project>
