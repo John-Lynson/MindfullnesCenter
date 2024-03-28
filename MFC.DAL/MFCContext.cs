@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MFC.CORE.Models; // Verwijs naar je modellen
+using MFC.CORE.Models;
 
 namespace MFC.DAL
 {
@@ -10,6 +10,10 @@ namespace MFC.DAL
         { }
 
         public DbSet<User> Users { get; set; }
-        // Definieer andere DbSet<Entiteit> voor je modellen
+        public DbSet<ForumPost> ForumPosts { get; set; }
+        public DbSet<LiveSession> LiveSessions { get; set; }
+        public DbSet<Meditation> Meditations { get; set; }
+        public DbSet<Progress> Progresses { get; set; }
+        public DbSet<WellnessPlan> WellnessPlans { get; set; }
     }
 }
