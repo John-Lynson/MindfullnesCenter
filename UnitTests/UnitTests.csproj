@@ -21,4 +21,16 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Core\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MFC.ADMIN\MFC.ADMIN.csproj" />
+    <ProjectReference Include="..\MFC.CORE\MFC.CORE.csproj" />
+    <ProjectReference Include="..\MFC.DAL\MFC.DAL.csproj" />
+    <ProjectReference Include="..\MFC.SHARED\MFC.SHARED.csproj" />
+    <ProjectReference Include="..\MFC.WEB3\MFC.WEB3.csproj" />
+  </ItemGroup>
+
 </Project>
