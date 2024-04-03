@@ -24,7 +24,12 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-    <ProjectReference Include="..\MFC.CORE\MFC.CORE.csproj" />
-  </ItemGroup>
+	  <Folder Include="Interfaces\" />
+	  <Folder Include="Repositories\" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\MFC.CORE\MFC.CORE.csproj" />
+	</ItemGroup>
 
 </Project>
