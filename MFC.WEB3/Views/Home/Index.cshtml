@@ -1,9 +1,23 @@
-﻿@{
+﻿@model MFC.CORE.DTOs.DailyAffirmationDto
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1>Welkom bij Onze Applicatie</h1>
-    <p>Dit is een geweldige applicatie die je helpt met [beschrijf hier de voordelen/features].</p>
-    <a href="/Account/Login">Inloggen / Registreren</a>
+    <h1 class="display-4">Welkom bij Onze Applicatie</h1>
+    <p>Dit is een geweldige applicatie die je helpt met je dagelijkse affirmaties, mindfulness, en persoonlijke groei.</p>
+    @if (Model?.Message != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Dagelijkse Affirmatie</h4>
+            <p>@Model.Message</p>
+            <hr>
+            <p class="mb-0">Neem een moment om over deze woorden na te denken en hoe je ze vandaag kunt toepassen.</p>
+        </div>
+    }
+    else
+    {
+        <p>Geen affirmatie voor vandaag gevonden. Kom morgen terug voor meer inspiratie!</p>
+    }
+    <a class="btn btn-primary" href="/Account/Login">Inloggen / Registreren</a>
 </div>

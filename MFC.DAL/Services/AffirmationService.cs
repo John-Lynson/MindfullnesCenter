@@ -1,4 +1,5 @@
-﻿using MFC.CORE.Models;
+﻿using MFC.CORE.Interfaces.Services; 
+using MFC.CORE.Models;
 using MFC.DAL.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace MFC.DAL.Services
 {
-    public class AffirmationService
+    // Update de klasse om IAffirmationService te implementeren
+    public class AffirmationService : IAffirmationService
     {
         private readonly MFCContext _context;
 
@@ -18,6 +20,7 @@ namespace MFC.DAL.Services
 
         public async Task<DailyAffirmation> GetTodaysAffirmationAsync()
         {
+            // Jouw bestaande logica om de dagelijkse affirmatie op te halen
             return await _context.DailyAffirmations
                 .OrderBy(r => Guid.NewGuid())
                 .FirstOrDefaultAsync();

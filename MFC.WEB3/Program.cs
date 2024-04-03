@@ -3,8 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MFC.CORE;
 using MFC.CORE.Interfaces;
+using MFC.CORE.Interfaces.Services;
 using MFC.DAL;
 using MFC.DAL.Repositories;
+using MFC.DAL.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -71,6 +73,10 @@ builder.Services.AddDbContext<MFCContext>(options =>
 
 // Voeg de repository toe aan de DI container
 builder.Services.AddScoped<IDailyAffirmationRepository, DailyAffirmationRepository>();
+
+// voeg de services toe aan de DI container:
+
+builder.Services.AddScoped<IAffirmationService, AffirmationService>();
 
 var app = builder.Build();
 
