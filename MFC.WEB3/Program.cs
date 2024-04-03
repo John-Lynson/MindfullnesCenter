@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MFC.CORE;
+using MFC.CORE.Interfaces;
+using MFC.DAL;
+using MFC.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -64,6 +68,9 @@ builder.Services.AddAuthentication(options =>
 // Voeg DbContext toe
 builder.Services.AddDbContext<MFCContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MFCDatabase")));
+
+// Voeg de repository toe aan de DI container
+builder.Services.AddScoped<IDailyAffirmationRepository, DailyAffirmationRepository>();
 
 var app = builder.Build();
 

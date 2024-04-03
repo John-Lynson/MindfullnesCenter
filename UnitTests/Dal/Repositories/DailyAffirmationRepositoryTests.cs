@@ -1,64 +1,77 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Moq;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 using MFC.CORE.Models;
-using MFC.DAL.Repositories;
 using MFC.DAL.Database;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using MFC.DAL.Repositories;
 
 public class DailyAffirmationRepositoryTests
 {
-    private readonly Mock<DbSet<DailyAffirmation>> _mockSet;
-    private readonly Mock<MFCContext> _mockContext;
-    private readonly DailyAffirmationRepository _repository;
-
-    public DailyAffirmationRepositoryTests()
+    // Maak een nieuwe in-memory database context voor elke test om isolatie te waarborgen.
+    private MFCContext CreateContext()
     {
-        _mockSet = new Mock<DbSet<DailyAffirmation>>();
-        _mockContext = new Mock<MFCContext>();
-        _repository = new DailyAffirmationRepository(_mockContext.Object);
+        var options = new DbContextOptionsBuilder<MFCContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase" + System.Guid.NewGuid()) // Unieke naam om elke test te isoleren
+            .Options;
 
-        _mockContext.Setup(m => m.DailyAffirmations).Returns(_mockSet.Object);
+        var context = new MFCContext(options);
+        return context;
     }
 
     [Fact]
     public async Task GetAffirmationAsync_Returns_Affirmation()
     {
-        var affirmations = new List<DailyAffirmation>
+        using (var context = CreateContext())
         {
-            new DailyAffirmation { Id = 1, Message = "Be positive" },
-            new DailyAffirmation { Id = 2, Message = "Keep going" }
-        }.AsQueryable();
+            var repository = new DailyAffirmationRepository(context);
 
-        _mockSet.As<IQueryable<DailyAffirmation>>().Setup(m => m.Provider).Returns(affirmations.Provider);
-        _mockSet.As<IQueryable<DailyAffirmation>>().Setup(m => m.Expression).Returns(affirmations.Expression);
-        _mockSet.As<IQueryable<DailyAffirmation>>().Setup(m => m.ElementType).Returns(affirmations.ElementType);
-        _mockSet.As<IQueryable<DailyAffirmation>>().Setup(m => m.GetEnumerator()).Returns(affirmations.GetEnumerator());
+            context.DailyAffirmations.Add(new DailyAffirmation { Id = 1, Message = "Be positive" });
+            context.DailyAffirmations.Add(new DailyAffirmation { Id = 2, Message = "Keep going" });
+            await context.SaveChangesAsync();
 
-        var result = await _repository.GetAffirmationAsync(1);
+            var result = await repository.GetAffirmationAsync(1);
 
-        Assert.NotNull(result);
-        Assert.Equal("Be positive", result.Message);
+            Assert.NotNull(result);
+            Assert.Equal("Be positive", result.Message);
+        }
     }
 
     [Fact]
     public async Task GetAllAffirmationsAsync_Returns_All_Affirmations()
     {
-        // Soortgelijke setup als GetAffirmationAsync, maar test voor het ophalen van alle affirmations
+        using (var context = CreateContext())
+        {
+            var repository = new DailyAffirmationRepository(context);
+
+            context.DailyAffirmations.Add(new DailyAffirmation { Id = 1, Message = "Test 1" });
+            context.DailyAffirmations.Add(new DailyAffirmation { Id = 2, Message = "Test 2" });
+            await context.SaveChangesAsync();
+
+            var affirmations = await repository.GetAllAffirmationsAsync();
+
+            Assert.NotNull(affirmations);
+            Assert.Equal(2, affirmations.Count());
+        }
     }
 
     [Fact]
     public async Task AddAffirmationAsync_Adds_Affirmation()
     {
-        var affirmation = new DailyAffirmation { Id = 3, Message = "Stay strong" };
+        using (var context = CreateContext())
+        {
+            var repository = new DailyAffirmationRepository(context);
 
-        _mockSet.Setup(m => m.AddAsync(It.IsAny<DailyAffirmation>(), default)).ReturnsAsync((DailyAffirmation affirmation, CancellationToken token) => affirmation);
+            var affirmation = new DailyAffirmation { Id = 3, Message = "Stay strong" };
 
-        await _repository.AddAffirmationAsync(affirmation);
+            await repository.AddAffirmationAsync(affirmation);
+            await context.SaveChangesAsync();
 
-        _mockSet.Verify(m => m.AddAsync(It.Is<DailyAffirmation>(a => a == affirmation), default), Times.Once());
-        _mockContext.Verify(m => m.SaveChangesAsync(default(CancellationToken)), Times.Once());
+            var addedAffirmation = await context.DailyAffirmations.FindAsync(3);
+
+            Assert.NotNull(addedAffirmation);
+            Assert.Equal("Stay strong", addedAffirmation.Message);
+        }
     }
 }

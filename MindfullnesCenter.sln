@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MFC.ADMIN", "MFC.ADMIN\MFC.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MFC.SHARED", "MFC.SHARED\MFC.SHARED.csproj", "{756315D0-97EE-46CD-A8F4-678FA9A97ABF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{02C50D58-B75C-4CF7-BC90-F9420C96E86A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{756315D0-97EE-46CD-A8F4-678FA9A97ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{756315D0-97EE-46CD-A8F4-678FA9A97ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{756315D0-97EE-46CD-A8F4-678FA9A97ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C50D58-B75C-4CF7-BC90-F9420C96E86A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C50D58-B75C-4CF7-BC90-F9420C96E86A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C50D58-B75C-4CF7-BC90-F9420C96E86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C50D58-B75C-4CF7-BC90-F9420C96E86A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
