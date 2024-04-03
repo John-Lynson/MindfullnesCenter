@@ -1,0 +1,86 @@
+/* Sidebar basisstijlen */
+.sidebar {
+    background-color: #05192e; /* Achtergrondkleur van de sidebar */
+    width: 250px; /* Breedte van de sidebar */
+    height: 100vh; /* Volledige hoogte */
+    position: fixed;
+    left: -250px; /* Begin buiten het scherm om verborgen te zijn */
+    top: 0;
+    transition: left 0.3s ease; /* Animatie voor het in-/uitklappen */
+    z-index: 5; /* Zorg ervoor dat de sidebar boven de overlay staat */
+}
+
+    /* Stijl voor sidebar links */
+    .sidebar a {
+        color: #FFFFFF; /* Kleur van de iconen en tekst */
+        font-size: 1.5rem; /* Grootte van de iconen */
+        text-decoration: none; /* Verwijdert onderstreping */
+        padding: 15px; /* Padding rondom de links */
+        display: block; /* Zorgt ervoor dat de links de volledige breedte van de sidebar innemen */
+        transition: color 0.3s; /* Overgangseffect voor hover */
+    }
+
+        /* Hover-effect voor sidebar links */
+        .sidebar a:hover {
+            color: #007bff; /* Kleur bij hover */
+            background-color: #000000; /* Achtergrondkleur bij hover, optioneel */
+        }
+
+.overlay {
+    display: none; /* Start verborgen */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5); /* Dim-effect */
+    z-index: 4; /* Onder de sidebar */
+    transition: opacity 0.3s ease;
+}
+
+    .overlay.active {
+        display: block; /* Maak zichtbaar */
+        opacity: 1; /* Verwijder transparantie */
+    }
+
+
+
+#sidebarCollapse {
+    z-index: 6; /* Boven de sidebar en overlay */
+    position: fixed;
+    top: 15px;
+    left: 15px; /* Aanpassen zodat het zichtbaar is wanneer de sidebar verborgen is */
+    cursor: pointer; /* Maakt duidelijk dat dit een klikbaar element is */
+    color: #FFFFFF; /* Icon kleur */
+    font-size: 1.5rem; /* Icon grootte */
+}
+
+/* Media query voor kleine schermen */
+@media (max-width: 768px) {
+    .sidebar.show {
+        left: 0; /* Maakt de sidebar zichtbaar */
+    }
+
+        .sidebar.show ~ .overlay {
+            display: block; /* Toont de overlay */
+        }
+
+    #sidebarCollapse {
+        display: block; /* Toont de toggle-knop */
+    }
+}
+
+/* Stijlen voor grotere schermen */
+@media (min-width: 768px) {
+    #sidebar {
+        left: 0; /* Sidebar zichtbaar maken */
+    }
+
+    #content {
+        margin-left: 250px; /* Ruimte maken voor de sidebar */
+    }
+
+    #sidebarCollapse {
+        display: none; /* Verbergt de collapse-knop op grotere schermen */
+    }
+}
