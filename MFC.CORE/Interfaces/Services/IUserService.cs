@@ -1,7 +1,7 @@
 ﻿using MFC.CORE.Models;
 using System.Threading.Tasks;
 
-namespace MFC.CORE.Interfaces
+namespace MFC.CORE.Interfaces.Services
 {
     public interface IUserService
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MFC.CORE.Interfaces
+namespace MFC.CORE.Interfaces.Services
 {
     public interface IAffirmationService
     {

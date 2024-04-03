@@ -1,4 +1,4 @@
-﻿using MFC.CORE.Interfaces;
+﻿using MFC.CORE.Interfaces.Services;
 using MFC.CORE.Models;
 using MFC.DAL.Database;
 using Microsoft.EntityFrameworkCore;
