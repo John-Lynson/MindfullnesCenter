@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MFC.ADMIN", "MFC.ADMIN\MFC.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MFC.SHARED", "MFC.SHARED\MFC.SHARED.csproj", "{756315D0-97EE-46CD-A8F4-678FA9A97ABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{02C50D58-B75C-4CF7-BC90-F9420C96E86A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{02C50D58-B75C-4CF7-BC90-F9420C96E86A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{F172392E-60F1-4822-A74C-112D6B292F03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A3703F8-C246-4BF1-ADC2-093F420DCC4F} = {F172392E-60F1-4822-A74C-112D6B292F03}
+		{5A06A674-5D66-4904-8008-36F5A4B2320C} = {F172392E-60F1-4822-A74C-112D6B292F03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3A30ED6-5A9C-4452-87BB-15D75ED249CA}
