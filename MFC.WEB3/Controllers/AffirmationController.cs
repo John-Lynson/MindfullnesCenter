@@ -2,23 +2,31 @@
 using MFC.CORE.DTOs;
 using MFC.DAL.Services;
 using MFC.CORE.Interfaces;
+using System.Threading.Tasks;
+using MFC.CORE.Interfaces.Services;
 
 namespace MFC.WEB3.Controllers
 {
-    public class AffirmationController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class AffirmationController : ControllerBase
     {
-        private readonly AffirmationService _affirmationService;
+        private readonly IAffirmationService _affirmationService;
 
-        public AffirmationController(AffirmationService affirmationService)
+        public AffirmationController(IAffirmationService affirmationService)
         {
             _affirmationService = affirmationService;
         }
 
-        public async Task<IActionResult> Daily()
+        [HttpGet("Daily")]
+        public async Task<IActionResult> GetDailyAffirmation()
         {
             var affirmation = await _affirmationService.GetTodaysAffirmationAsync();
+            if (affirmation == null)
+                return NotFound();
+
             var dto = new DailyAffirmationDto { Message = affirmation.Message };
-            return View(dto);
+            return Ok(dto);
         }
     }
 }

@@ -1,25 +1,31 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace MFC.WEB.Controllers
 {
-    public class AccountController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class AccountController : ControllerBase
     {
+        [HttpGet("Login")]
         public IActionResult Login(string returnUrl = "/")
         {
-            return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl }, "Auth0");
+            return Challenge(new AuthenticationProperties { RedirectUri = returnUrl }, "Auth0");
         }
 
         [Authorize]
-        public async Task Logout()
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync("Auth0", new AuthenticationProperties
             {
                 RedirectUri = Url.Action("Index", "Home")
             });
+            return Ok();
         }
     }
 }
