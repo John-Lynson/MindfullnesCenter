@@ -16,12 +16,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
-    <PackageReference Include="xunit" Version="2.5.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+    <PackageReference Include="xunit" Version="2.7.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +40,10 @@
     <ProjectReference Include="..\MFC.DAL\MFC.DAL.csproj" />
     <ProjectReference Include="..\MFC.SHARED\MFC.SHARED.csproj" />
     <ProjectReference Include="..\MFC.WEB3\MFC.WEB3.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dal\Services\" />
   </ItemGroup>
 
 </Project>
