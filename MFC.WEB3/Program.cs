@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using MFC.CORE.Interfaces;
 using MFC.DAL.Services;
+using MFC.CORE.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
-        builder => builder.WithOrigins("http://localhost:7082")
+        builder => builder.WithOrigins("http://localhost:3000")
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
@@ -52,6 +53,8 @@ builder.Services.AddDbContext<MFCContext>(options =>
 // Repository en services toevoegen
 builder.Services.AddScoped<IDailyAffirmationRepository, DailyAffirmationRepository>();
 builder.Services.AddScoped<IAffirmationService, AffirmationService>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 var app = builder.Build();
 

@@ -1,12 +1,16 @@
-﻿using System;
+﻿using MFC.CORE.DTOs;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MFC.CORE.Interfaces.Services
 {
-    internal interface IBookService
+    public interface IBookService
     {
+        Task<BookDto> GetBookByIdAsync(int id);
+        Task<IEnumerable<BookDto>> GetAllBooksAsync();
+        Task<BookDto> AddBookAsync(BookDto book);
+        Task UpdateBookAsync(BookDto book);
+        Task DeleteBookAsync(int id);
     }
 }
+
