@@ -16,6 +16,6 @@ namespace MFC.DAL.Database
         public DbSet<Progress> Progresses { get; set; }
         public DbSet<WellnessPlan> WellnessPlans { get; set; }
         public DbSet<DailyAffirmation> DailyAffirmations { get; set; }
-
+        public DbSet<Book> Books { get; set; }
     }
 }
