@@ -25,4 +25,8 @@
     <ProjectReference Include="..\MFC.DAL\MFC.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="client\" />
+  </ItemGroup>
+
 </Project>
