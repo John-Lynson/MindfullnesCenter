@@ -1,0 +1,37 @@
+name: .NET Core CI
+
+on:
+  push:
+    branches: [ main, develop ]  # Triggers on commits pushed to main and develop branches
+  pull_request:
+    branches: [ main, develop ]  # Triggers on pull requests to main and develop branches
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # Specifies that the job should run on the latest Ubuntu runner
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1  # Sets up a .NET CLI environment
+      with:
+        dotnet-version: '3.1'  # Set this to the .NET version you're using
+
+    - name: Restore Dependencies
+      run: dotnet restore  # Restores NuGet packages specified in the project files
+
+    - name: Build Project
+      run: dotnet build --no-restore --configuration Release  # Compiles the project and its dependencies into a set of binaries
+
+    - name: Run Tests
+      run: dotnet test --no-build --verbosity normal  # Runs tests in the project and produces a test result report
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v2  # Caches dependencies and build outputs to improve workflow execution time
+      with:
+        path: ~/.nuget/packages  # Specifies the path to cache
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}  # Unique key for the cache
+        restore-keys: |
+          ${{ runner.os }}-nuget-
