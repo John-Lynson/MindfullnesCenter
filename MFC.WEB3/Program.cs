@@ -50,11 +50,13 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddDbContext<MFCContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MFCDatabase")));
 
-// Repository en services toevoegen
+
 builder.Services.AddScoped<IDailyAffirmationRepository, DailyAffirmationRepository>();
 builder.Services.AddScoped<IAffirmationService, AffirmationService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 var app = builder.Build();
 

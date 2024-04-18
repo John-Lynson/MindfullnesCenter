@@ -9,11 +9,10 @@ using MFC.DAL.Repositories;
 
 public class DailyAffirmationRepositoryTests
 {
-    // Maak een nieuwe in-memory database context voor elke test om isolatie te waarborgen.
     private MFCContext CreateContext()
     {
         var options = new DbContextOptionsBuilder<MFCContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase" + System.Guid.NewGuid()) // Unieke naam om elke test te isoleren
+            .UseInMemoryDatabase(databaseName: "TestDatabase" + System.Guid.NewGuid())
             .Options;
 
         var context = new MFCContext(options);

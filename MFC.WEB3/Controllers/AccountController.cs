@@ -11,7 +11,7 @@ namespace MFC.WEB.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService; 
+        private readonly IAccountService _accountService;
 
         public AccountController(IAccountService accountService)
         {
@@ -40,14 +40,20 @@ namespace MFC.WEB.Controllers
 
         [Authorize]
         [HttpGet("Profile")]
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
-            var userProfile = _accountService.GetUserProfile();
+            // Assuming GetUserByIdAsync can be used to retrieve the user profile
+            // Auth0 should provide the UserId that is linked to your User entity
+            string userId = User.Claims.FirstOrDefault(c => c.Type == "user_id")?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User ID not found in the user's claims.");
+
+            var userProfile = await _accountService.GetUserByIdAsync(userId);
             if (userProfile == null)
                 return NotFound("User profile is not available.");
 
             return Ok(userProfile);
         }
-
     }
 }
