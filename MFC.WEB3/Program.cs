@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authentication;
 using MFC.CORE.Interfaces;
 using MFC.DAL.Services;
 using MFC.CORE.Interfaces.Repositories;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
-        builder => builder.WithOrigins("http://localhost:3000")
+        builder => builder.WithOrigins("http://localhost:3000")  // Adjust if your React app will run on a different port in production
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
@@ -50,7 +52,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddDbContext<MFCContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MFCDatabase")));
 
-
+// Repository and service dependencies
 builder.Services.AddScoped<IDailyAffirmationRepository, DailyAffirmationRepository>();
 builder.Services.AddScoped<IAffirmationService, AffirmationService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
@@ -60,27 +62,33 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 var app = builder.Build();
 
-// Statische bestanden gebruiken
-app.UseStaticFiles();
+app.UseStaticFiles();  // Serve wwwroot files, important for any static assets
 
-// CORS beleid gebruiken
-app.UseCors("AllowSpecificOrigins");
+app.UseStaticFiles(new StaticFileOptions  // Serve React app build directory
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "client/build")),
+    RequestPath = ""
+});
 
-// Middleware voor routing
+app.UseCors("AllowSpecificOrigins");  // Apply CORS as configured
+
 app.UseRouting();
 
-// Authenticatie en autorisatie middleware gebruiken
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Endpoints configureren
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
-    endpoints.MapRazorPages();
+    endpoints.MapControllers(); 
+    endpoints.MapRazorPages();  
+
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
+    // Fallback to React app's entry point for SPA routing
+    endpoints.MapFallbackToFile("index.html");
 });
 
 app.Run();
+
