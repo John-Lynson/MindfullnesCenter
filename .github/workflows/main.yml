@@ -2,21 +2,36 @@ name: .NET Core CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, develop ] 
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ] 
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1' # Pas aan naar je .NET versie
-    - name: Build met dotnet
-      run: dotnet build --configuration Release
-    - name: Run tests
-      run: dotnet test
+        dotnet-version: '3.1'  # Update this as per your .NET version
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build Project
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run Tests
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
